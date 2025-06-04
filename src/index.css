@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-light: #0f419a;
+  --color-primary-dark:#1f156e;
+  --font-poppins: Poppins, sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+.btn-primary {
+  @apply font-bold md:gap-2  shadow-md bg-primary-light text-white rounded-full border;
+}
+
+.step_icon {
+    background-image: linear-gradient(to right, #1e90ff, #0860b5);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    color: transparent;
+}
+
+.custom-shape-divider-bottom-1741612936 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1741612936 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 150px;
+}
+
+.custom-shape-divider-bottom-1741612936 .shape-fill {
+  fill: #FFFFFF;
+}
+
+.custom-shape-divider-top-1741623129 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1741623129 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 150px;
+}
+
+.custom-shape-divider-top-1741623129 .shape-fill {
+  fill: #FFFFFF;
+}
