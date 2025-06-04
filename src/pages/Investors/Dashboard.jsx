@@ -49,7 +49,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         const doMining = async () => {
-            // await axios.patch('api/v1/investments/mine');
+            await axios.patch('api/v1/investments/mine');
             await axios.get('api/v1/users/me').then(res => console.log(res.data));
         };
         fetchStats();
