@@ -16,7 +16,7 @@ const Withdrawal = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const availableBalance = user?.wallet[0]?.[walletType] || 0;
+  const availableBalance = user?.wallet?.[walletType] || 0;
 
   const fetchBankAccounts = async () => {
     try {
@@ -92,7 +92,7 @@ const Withdrawal = () => {
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-white">Wallet Balance</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Available: ${user?.wallet[0]?.balance?.toLocaleString() || '0'}
+                  Available: ${user?.wallet?.balance?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>
@@ -110,7 +110,7 @@ const Withdrawal = () => {
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-white">Investment Profit</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Available: ${user?.wallet[0]?.profit?.toLocaleString() || '0'}
+                  Available: ${user?.wallet?.profit?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>
@@ -128,7 +128,7 @@ const Withdrawal = () => {
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-white">Referral Earnings</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Available: ${user?.wallet[0]?.referralBalance?.toLocaleString() || '0'}
+                  Available: ${user?.wallet?.referralBalance?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>
@@ -219,7 +219,7 @@ const Withdrawal = () => {
             Your withdrawal of ${amount} is being processed. You'll receive a confirmation email shortly.
           </p>
           <button
-            onClick={() => navigate('/transactions')}
+            onClick={() => navigate('/manage/investor/transactions')}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             View Transactions

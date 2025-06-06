@@ -54,14 +54,7 @@ const Plans = () => {
     } catch (err) {
        // Extract errors from the backend response
        if (err.response && err.response.data.message && err.response.data.errors) {
-        const newErrors = {};
-
-        err.response.data.errors.forEach(el => {
-            for (let key in el) {
-                newErrors[key] = el[key];
-            }
-        });
-        setErrors(newErrors);
+        setErrors(err.response.data.errors);
         } else {
             setErrors(err);
             console.error('Unexpected Error:', err);
@@ -91,14 +84,7 @@ const Plans = () => {
     } catch (err) {
         // Extract errors from the backend response
         if (err.response && err.response.data.message && err.response.data.errors) {
-            const newErrors = {};
-
-            err.response.data.errors.forEach(el => {
-                for (let key in el) {
-                    newErrors[key] = el[key];
-                }
-            });
-            setErrors(newErrors);
+            setErrors(err.response.data.errors);
         } else {
             setErrors(err);
             console.error('Unexpected Error:', err);

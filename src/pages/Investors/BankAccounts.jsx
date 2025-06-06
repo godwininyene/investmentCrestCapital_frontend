@@ -10,7 +10,7 @@ import SelectField from '../../components/common/SelectField';
 
 const BankAccounts = () => {
   const [addNewBank, setAddBankState] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({});
   const [processing, setProcessing] = useState(false);
   const [banks, setBanks] = useState([]);
 
@@ -33,28 +33,56 @@ const BankAccounts = () => {
     fetchMyAccounts();
   }, [])
   
+let submit = async (e) => {
+  e.preventDefault();
+  setProcessing(true);
+  setError(false); // Clear previous error
 
-  let submit = async (e) => {
-    e.preventDefault();
-    setProcessing(true);
-    let form = new FormData(e.target);
-    let jsonData = Object.fromEntries(form);
-    await axios.post('api/v1/users/me/banks', jsonData)
-    .then((res) => {
-      setProcessing(false);
-      if(res.data.status === 'success'){
-        setBanks(res.data.data.account);
-        setAddBankState(false)
-        form.reset();
-      }
-    })
-    .catch((error) => {
-      setProcessing(false);
-      setError(error?.response.data.message);
-      alert(error?.response.data.message);
-      console.log(error);
-    })
+  const formElement = e.target;
+  const form = new FormData(formElement);
+  const jsonData = Object.fromEntries(form);
+
+  try {
+    const res = await axios.post('api/v1/users/me/banks', jsonData);
+
+    if (res.data.status === 'success') {
+      setBanks(res.data.data.account);
+      alert("Account added successfully")
+      setAddBankState(false);
+      formElement.reset();
+    }
+  } catch (error) {
+    // Stop loading indicator
+    setProcessing(false);
+
+    // No response from server (network/server error)
+    if (!error.response) {
+      setError('Network error. Please check your internet connection or try again later.');
+      alert('Network error. Please check your internet connection or try again later.');
+      return;
+    }
+
+    const { message, errors } = error.response.data;
+
+    if (message && !errors) {
+      // Server returned a single message
+      alert(message);
+    } else if (errors) {
+      // Server returned validation errors
+      setError(errors);
+      alert('Please check the form and try again.');
+    } else {
+      // Fallback error
+      setError('An unexpected error occurred. Please try again.');
+      alert('An unexpected error occurred. Please try again.');
+    }
+
+    console.error(error);
+  } finally {
+    setProcessing(false);
   }
+};
+
 
 
   return (
@@ -80,6 +108,7 @@ const BankAccounts = () => {
                     placeholder={'Enter the Bank name'}
                     label={'Bank Name'}
                     classNames='mb-2'
+                    error={error.bankName}
                   />
 
                   <InputField
@@ -87,6 +116,8 @@ const BankAccounts = () => {
                     placeholder={'Enter the Bank name'}
                     label={'Account Number / IBAN'}
                     classNames='mb-2'
+                    isRequired={false}
+                    error={error.accountNumber}
                   />
 
                   <InputField
@@ -94,30 +125,25 @@ const BankAccounts = () => {
                     placeholder={'Enter the account name'}
                     label={'Account Holder Name'}
                     classNames='mb-2'
-                  />
-
-                  <InputField
-                    name={'accountName'}
-                    placeholder={'Enter the account name'}
-                    label={'Account Holder Name'}
-                    classNames='mb-2'
+                    error={error.accountName}
                   />
 
                   <SelectField
-                    name="payOption"
+                    name="accountType"
                     label="Account Type"
                     options={['savings Account', 'Current Account', 'Fix Deposit Account', 'Others']}
                     classNames="mb-2"
+                    error={error.payOption}
                   />
                  
-                  <div className="mb-5 relative">
-                    {error && (<p className="text-sm w-full text-red-500 mb-4">{ error }</p>)}
+                  <div className="mt-5 relative">
+                  
                     <SubmitButton
                       label="Save Account Details"
                       processing={processing}
                       Icon={BiSave}
                       className="px-4 w-full py-3"
-                      onClick={submit}
+                     
                     />
                   </div>
                 </form>

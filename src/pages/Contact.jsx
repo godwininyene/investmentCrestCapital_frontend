@@ -1,9 +1,28 @@
 import bannerBg from './../assets/images/about_bg.jpg';
 import { IoMdSettings } from 'react-icons/io';
 import CTA from '../components/CTA';
+import { useEffect, useState } from 'react';
+import axios from '../lib/axios';
 
 
 const Contact = () => {
+
+    const [questionsList, loadQuestions] = useState([]);
+     useEffect(() => {
+        fetchFaqs();
+      }, [])
+    
+      let fetchFaqs = async () => {
+        await axios.get('api/v1/faqs')
+        .then((res) => {
+         
+          loadQuestions(res.data.data.faqs);
+        })
+        .catch((err) => {
+          console.log(err);
+          
+        });
+      }
     return (
         <div className="">
             {/* Hero Section */}
@@ -39,7 +58,7 @@ const Contact = () => {
                     <div data-aos="fade-up" className="p-3">
                         <h2 className="text-3xl font-bold mb-6 uppercase text-primary-light">Contact Information</h2>
                         <p className="mb-4"><span className='font-bold'>Phone:</span> +123 456 7890</p>
-                        <p className="mb-4"><span className='font-bold'>Email: </span> support@tradeinvest.com</p>
+                        <p className="mb-4"><span className='font-bold'>Email: </span> support@investmentcrestcapital.com</p>
                         <p> <span className='font-bold'>Address:</span> 23 Blockchain Avenue, New York, USA</p>
                     </div>
                 </div>
@@ -51,9 +70,7 @@ const Contact = () => {
                     <h2 className="text-3xl font-bold mb-6 uppercase text-primary-light">Frequently Asked Questions</h2>
                     <p className="mb-8">Find answers to common questions about investing with us.</p>
                     <ul className="text-left space-y-4">
-                        {[{ question: "How do I start investing?", answer: "Simply sign up, deposit funds, and choose a plan." },
-                        { question: "Are my funds secure?", answer: "Yes, we use high-level encryption and security protocols." },
-                        { question: "Can I withdraw anytime?", answer: "Yes, withdrawals are processed swiftly." }].map((faq, index) => (
+                        {questionsList.length > 0 && questionsList.map((faq, index) => (
                             <li key={index} data-aos="fade-up" className="p-4 border rounded-lg shadow-md bg-gray-50">
                                 <h3 className="text-lg font-semibold">{faq.question}</h3>
                                 <p className="mt-2">{faq.answer}</p>

@@ -11,7 +11,7 @@ const PersonalDetails = ()=>{
 
     return(
         <>
-            <h1 className="mb-4 text-center font-semibold">Personal Details</h1>
+            <h1 className="mb-4 text-center font-semibold dark:text-slate-400">Personal Details</h1>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-2 mb-4 relative'>
                 <InputField
                     name={'firstName'}

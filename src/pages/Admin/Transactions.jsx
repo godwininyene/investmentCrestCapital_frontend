@@ -362,7 +362,8 @@ export default function Transactions() {
                             {transaction.type}
                           </div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">
-                            {transaction.paymentChannel || 'N/A'}
+                            {transaction.type === 'deposit' ? transaction.paymentChannel : transaction.accountType}
+                            
                           </div>
                         </div>
                       </div>
@@ -425,12 +426,12 @@ export default function Transactions() {
                             <button
                               onClick={() => {
                                 setSelectedTransaction(transaction);
-                                approveTransaction(transaction._id);
+                                approveTransaction(transaction.id);
                               }}
                               className="text-green-600 cursor-pointer dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
-                              disabled={approving && selectedTransaction?._id === transaction._id}
+                              disabled={approving && selectedTransaction?.id === transaction.id}
                             >
-                              {approving && selectedTransaction?._id === transaction._id ? (
+                              {approving && selectedTransaction?.id === transaction.id ? (
                                 <LoadingIndicator size={4} />
                               ) : (
                                 <BiCheck className="h-5 w-5" />
@@ -440,12 +441,12 @@ export default function Transactions() {
                             <button
                               onClick={() => {
                                 setSelectedTransaction(transaction);
-                                declineTransaction(transaction._id);
+                                declineTransaction(transaction.id);
                               }}
                               className="text-red-600 cursor-pointer dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
-                              disabled={declining && selectedTransaction?._id === transaction._id}
+                              disabled={declining && selectedTransaction?.id === transaction.id}
                             >
-                              {declining && selectedTransaction?._id === transaction._id ? (
+                              {declining && selectedTransaction?.id === transaction.id ? (
                                 <LoadingIndicator size={4} />
                               ) : (
                                 <FaTimesCircle className="h-5 w-5" />
@@ -484,7 +485,7 @@ export default function Transactions() {
              
 
               <span className="mx-auto h-32 w-32 block -mt-32">
-                <img  alt={selectedTransaction.user?.firstName}  src={(selectedTransaction?.user.photo && selectedTransaction?.user.user.photo != 'default.png') ? selectedTransaction?.user.photo : defaultAvatar}  className={`bg-slate-300 h-32 w-32 rounded-full overflow-hidden`} />
+                <img  alt={selectedTransaction.user?.firstName}  src={(selectedTransaction?.user?.photo && selectedTransaction?.user?.photo != 'default.png') ? selectedTransaction?.user.photo : defaultAvatar}  className={`bg-slate-300 h-32 w-32 rounded-full object-cover overflow-hidden`} />
               </span>
               <section className="px-4 pt-3 text-center">
                 <h1 className="text-xl font-bold dark:text-slate-300">
@@ -550,7 +551,8 @@ export default function Transactions() {
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Payment Method</p>
                       <p className="text-sm text-gray-900 dark:text-white capitalize">
-                        {selectedTransaction.paymentChannel || 'N/A'}
+                        {selectedTransaction.type === 'deposit' ? selectedTransaction.paymentChannel : selectedTransaction.accountType}
+
                       </p>
                     </div>
                     

@@ -65,7 +65,7 @@ export default function Dashboard() {
                     <img
                         src={user.photo && user.photo !== 'default.png' ? user.photo : defaulAvatar}
                         alt="Profile"
-                        className="w-24 h-24 rounded-full border-4 border-blue-100 dark:border-slate-700"
+                        className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 dark:border-slate-700"
                     />
                     <div className="flex-1 text-center md:text-left">
                         <h1 className="text-3xl font-bold text-gray-800 dark:text-white">{user.name}</h1>

@@ -29,7 +29,7 @@ const SideBar = ({ user, isToggle, setToggle }) => {
         { name: "Manage Users", path: "admin/users", icon: <FaCog /> },
         { name: "Transactions", path: "admin/transactions", icon: <FaExchangeAlt /> },
         { name: "Investments", path: "admin/investments", icon: <FaMoneyCheckAlt /> },
-        { name: "Settings", path: "admin/settings", icon: <FaCog /> },
+        // { name: "Settings", path: "admin/settings", icon: <FaCog /> },
     ];
 
     const role = user.role;
@@ -65,9 +65,9 @@ const SideBar = ({ user, isToggle, setToggle }) => {
             <div className="flex flex-col lg:h-full  p-3">
                 {/* Brand Name */}
                 <section className="bg-sky-950 p-3 rounded-md shadow-md mb-4">
-                    <div className="flex items-center">
+                    <div className="flex items-center flex-col">
                         <img src={logo} alt="Logo" className="h-10" />
-                        <h2 className="text-white font-bold text-xl ml-2">TradeInvest</h2>
+                        <h2 className="text-white font-bold text-sm ml-1">InvestmentCrestCapital</h2>
                     </div>
                 </section>
 

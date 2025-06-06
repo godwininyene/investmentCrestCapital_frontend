@@ -20,7 +20,7 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
         let form =  new FormData(e.target)
         setErrorMessage('')
         setProcessing(true);
-        await axios.patch(`api/v1/users/${user._id}/wallets`, form)
+        await axios.patch(`api/v1/users/${user.id}/wallets`, form)
         .then((res) => {
             if(res.data.status ==='success'){
                 alert('Wallet funded successfully!')
@@ -60,7 +60,7 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
                                     </span>
                                     <section className="px-4 py-3 text-center">
                                         <h1 className="text-xl font-bold">
-                                            { user.name }
+                                             {`${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 'Unknown'}
                                         </h1>
                                         <p className="text-sm font-semibold text-primary">
                                             { user.email }
@@ -112,17 +112,17 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
                                             {/* Action */}
                                             <aside>
                                                 <h6>Balance</h6>
-                                                ${user?.wallet[0]?.balance.toLocaleString()}
+                                                ${user?.wallet?.balance.toLocaleString()}
                                             </aside>
                                             {/* Fund */}
                                             <aside>
                                                 <h6>Profit</h6>
-                                                ${user?.wallet[0]?.profit.toLocaleString()}
+                                                ${user?.wallet?.profit.toLocaleString()}
                                             </aside>
                                             {/* Delete Account */}
                                             <aside>
                                                 <h6>Referral Bal.</h6>
-                                                ${user?.wallet[0]?.referralBalance.toLocaleString()}
+                                                ${user?.wallet?.referralBalance.toLocaleString()}
                                             </aside>
                                         </div>
                                     </section>

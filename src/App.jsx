@@ -25,6 +25,7 @@ import Transactions from './pages/Admin/Transactions';
 import Users from './pages/Admin/Users';
 import Plans from './pages/Admin/Plans';
 import PaymentOptions from './pages/Admin/PaymentOptions';
+import FaqManager from './pages/Admin/FaqManager';
 
 //Investors pages
 import InvestorDashboard from './pages/Investors/Dashboard';
@@ -40,6 +41,7 @@ import AdminSettings from './pages/Admin/AdminSettings';
 import NotFound from './pages/NotFound';
 import Error from './components/Error';
 import { requireAuth } from './utils/protect';
+
 
 
 
@@ -74,6 +76,7 @@ function App() {
           <Route path='users' element={<Users />}></Route>
           <Route path='plans' element={<Plans />}></Route>
           <Route path='payment_options' element={<PaymentOptions />}></Route>
+          <Route path='manage_faq' element={<FaqManager />}></Route>
           <Route path='settings' element={<AdminSettings />}></Route>
         </Route>
 

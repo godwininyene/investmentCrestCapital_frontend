@@ -82,13 +82,13 @@ export default function Register() {
             {/* Stepper */}
             <div className='container horizontal'>
                 <div className='flex flex-col items-center mb-5'>
-                    <h3 className='font-bold text-2xl'>Create Your Account</h3>
-                    <p className='text-center lg:text-left'>Enter your details to create account and continue</p>
+                    <h3 className='font-bold text-2xl dark:text-slate-400'>Create Your Account</h3>
+                    <p className='text-center lg:text-left dark:text-slate-300'>Enter your details to create account and continue</p>
                 </div>
                 <Stepper steps={steps} currentStep={currentStep} />
 
                 {/* Display Components */}
-                <div className='my-10 p-4'>
+                <div className='p-4'>
                     <StepperContext.Provider value={{
                         formData, 
                         setFormData,
@@ -114,7 +114,7 @@ export default function Register() {
             }
 
             <div className='mt-5 text-center'>
-                <p className='inline-block pl-4 text-sm'>
+                <p className='inline-block pl-4 text-sm dark:text-slate-300'>
                     Already have Account?
                     <Link to="/users/login" className='inline-block ml-1 text-blue-600'>Click here to login</Link>
                 </p>

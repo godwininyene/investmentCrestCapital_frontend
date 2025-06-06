@@ -4,7 +4,7 @@ import NextButton from './common/NextButton';
 
 const StepperControl = ({ handleClick, steps, currentStep, handleSubmit, processing }) => {
     return (
-        <div className="container flex justify-between p-4 mt-4 mb-8">
+        <div className="container flex justify-between p-4 mb-8">
             {/* Only show Create Account button on step 1 */}
             {currentStep === 1 && (
                 <SubmitButton

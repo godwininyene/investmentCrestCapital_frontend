@@ -199,7 +199,7 @@ export default function Dashboard() {
                             <span className="text-sm font-medium">Investments</span>
                         </Link>
                         <Link 
-                            to="/manage/admin/faq" 
+                            to="/manage/admin/manage_faq" 
                             className="p-3 rounded-lg bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 transition-colors text-center"
                         >
                             <BsQuestionCircle className="mx-auto text-xl mb-2 text-amber-600 dark:text-amber-400" />
