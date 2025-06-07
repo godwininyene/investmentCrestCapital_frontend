@@ -26,13 +26,13 @@ const Footer = () => {
         <div data-aos="fade-left" data-aos-duration="1000">
           <h3 className="text-lg font-semibold">Contact Us</h3>
           <ul className="mt-3 space-y-3 text-gray-300">
-            <li className="flex items-center space-x-2">
+            {/* <li className="flex items-center space-x-2">
               <FaPhoneAlt className="text-yellow-400" />
               <span>+1 (912) 388-0218</span>
-            </li>
+            </li> */}
             <li className="flex items-center space-x-2">
               <FaEnvelope className="text-yellow-400" />
-              <span>support@investmentcrestcapital.com</span>
+              <span>admin@investmentcrestcapital.com</span>
             </li>
             <li className="flex items-center space-x-2">
               <FaMapMarkerAlt className="text-yellow-400" />

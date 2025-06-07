@@ -116,7 +116,7 @@ const Plans = () => {
   };
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -185,10 +185,10 @@ const Plans = () => {
                 error={errors.referalBonus}
               />
             </div>
-            <label className='block text-sm font-medium text-gray-700 mb-1'>Description</label>
+            <label className='block text-sm font-medium dark:text-slate-300 text-gray-500 mb-1'>Description</label>
              <textarea
                 name="description"
-                className='w-full py-2 px-4 transition-all duration-200 focus:outline-none border border-gray-300 rounded-lg focus:border-primary-light focus:outline-0 focus:ring-0'
+                className='w-full py-2 px-4  dark:bg-gray-700 transition-all duration-200 focus:outline-none border border-gray-300 rounded-lg focus:border-primary-light focus:outline-0 focus:ring-0'
               />
 
             <div className="flex items-center">

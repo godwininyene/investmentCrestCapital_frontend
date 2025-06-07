@@ -168,7 +168,7 @@ const PaymentOptions = () => {
   console.log(selectedOption);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -280,7 +280,7 @@ const PaymentOptions = () => {
         )}
 
         {/* Payment Options List */}
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden col-span-3">
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden lg:col-span-3">
           <div className="p-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center">
             <h2 className="font-semibold text-lg">All Payment Options</h2>
             <span className="text-sm text-gray-500 dark:text-gray-400">

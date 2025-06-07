@@ -28,9 +28,10 @@ const Header = () => {
     return(
         <div className={`header fixed w-full border-b-[1px] border-white/20 z-50 left-0 top-0 ${isFixedClass ? 'animate-fadeInDown' : ''}`} style={isFixedClass ? fixedHeader : {}}>
             <div className='max-w-[1140px] mx-auto w-full relative'> 
-                <nav className='flex items-center justify-between flex-wrap lg:flex-nowrap px-5 py-4'>
+                <nav className='flex items-center justify-between flex-wrap lg:flex-nowrap px-5 py-4 relative'>
                     <Link to="/" className='mr-4 flex items-center'>
-                        <img src={logo} alt="" className="h-10"/>
+                        <div className='h-12 w-12 text-white flex items-center justify-center rounded-full bg-primary-dark'>ICC</div>
+                        {/* <img src={logo} alt="" className="h-10"/> */}
                         <h2 className='text-white font-bold text-xl ml-1'>InvestmentCrestCapital</h2>
                     </Link>
 
@@ -77,12 +78,10 @@ const Header = () => {
                             </li>
                         </ul>
                     </div>
-
-                    {/* Google Translate positioned inside nav but on the right */}
-                    {/* <div className=' absolute left-52 top-20 transform -translate-y-1/2'>
-                        <GoogleTranslate />
-                    </div> */}
                 </nav>
+            </div>
+            <div className='absolute right-6'>
+                <GoogleTranslate />
             </div>
         </div>
     );

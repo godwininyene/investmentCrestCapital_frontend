@@ -64,10 +64,11 @@ const SideBar = ({ user, isToggle, setToggle }) => {
         >
             <div className="flex flex-col lg:h-full  p-3">
                 {/* Brand Name */}
-                <section className="bg-sky-950 p-3 rounded-md shadow-md mb-4">
+                <section className="bg-sky-950 p-3 rounded-md shadow mb-4">
                     <div className="flex items-center flex-col">
-                        <img src={logo} alt="Logo" className="h-10" />
-                        <h2 className="text-white font-bold text-sm ml-1">InvestmentCrestCapital</h2>
+                        {/* <img src={logo} alt="Logo" className="h-10" /> */}
+                        <div className='h-14 w-14 flex items-center justify-center rounded-full bg-primary-dark'>ICC</div>
+                        <h2 className="text-white font-bold text-xs ml-1">InvestmentCrestCapital</h2>
                     </div>
                 </section>
 

@@ -83,7 +83,7 @@ export default function Transactions() {
                     className="flex items-center cursor-pointer justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white font-medium rounded-lg shadow-md transition-all duration-300"
                 >
                     <BiCreditCard className="text-xl" />
-                    Bank Accounts
+                    Withrawal Wallets
                 </button>
             </div>
 

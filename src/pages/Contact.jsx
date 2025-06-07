@@ -57,8 +57,8 @@ const Contact = () => {
                     </div>
                     <div data-aos="fade-up" className="p-3">
                         <h2 className="text-3xl font-bold mb-6 uppercase text-primary-light">Contact Information</h2>
-                        <p className="mb-4"><span className='font-bold'>Phone:</span> +123 456 7890</p>
-                        <p className="mb-4"><span className='font-bold'>Email: </span> support@investmentcrestcapital.com</p>
+                        {/* <p className="mb-4"><span className='font-bold'>Phone:</span> +123 456 7890</p> */}
+                        <p className="mb-4"><span className='font-bold'>Email: </span> admin@investmentcrestcapital.com</p>
                         <p> <span className='font-bold'>Address:</span> 23 Blockchain Avenue, New York, USA</p>
                     </div>
                 </div>
