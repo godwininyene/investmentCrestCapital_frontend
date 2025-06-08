@@ -32,7 +32,7 @@ const Header = () => {
                     <Link to="/" className='mr-4 flex items-center'>
                         <div className='h-12 w-12 text-white flex items-center justify-center rounded-full bg-primary-dark'>ICC</div>
                         {/* <img src={logo} alt="" className="h-10"/> */}
-                        <h2 className='text-white font-bold text-xl ml-1'>InvestmentCrestCapital</h2>
+                        <h2 className='text-white font-bold text-xs ml-1'>InvestmentCrestCapital</h2>
                     </Link>
 
                     {/* Mobile Nav Icon */}
