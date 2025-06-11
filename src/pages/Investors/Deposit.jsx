@@ -16,6 +16,7 @@ const Deposit = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const[depositType, setDepositType] = useState()
 
   const fetchPaymentOptions = async () => {
     try {
@@ -62,14 +63,14 @@ const Deposit = () => {
     
     try {
       const formData = new FormData();
-      formData.append('type', 'deposit');
+      formData.append('type', depositType);
       formData.append('amount', amount);
       formData.append('receipt', receipt);
       formData.append('paymentChannel', paymentMethod.payOption.toLowerCase());
 
       await axios.post('api/v1/users/me/transactions', formData);
       setSuccess(true);
-      setStep(3);
+      setStep(4);
     } catch (err) {
       setError('Deposit failed. Please try again.');
       console.error(err);
@@ -79,37 +80,79 @@ const Deposit = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
-      <button 
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-blue-600 cursor-pointer dark:text-blue-400 mb-6"
-      >
-        <BiArrowBack className="text-xl" />
-        Back to Transactions
-      </button>
+   <div className="max-w-md mx-auto p-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+    <button 
+      onClick={() => navigate(-1)}
+      className="flex items-center gap-2 text-blue-600 cursor-pointer dark:text-blue-400 mb-6"
+    >
+      <BiArrowBack className="text-xl" />
+      Back to Transactions
+    </button>
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          {step === 1 && 'Select Payment Method'}
-          {step === 2 && 'Enter Deposit Details'}
-          {step === 3 && 'Deposit Successful'}
-        </h1>
-        <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
-          <div 
-            className="bg-primary-light h-2 rounded-full" 
-            style={{ width: `${step * 33}%` }}
-          ></div>
-        </div>
+    <div className="mb-8">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        {step === 1 && 'Select Deposit Type'}
+        {step === 2 && 'Select Payment Method'}
+        {step === 3 && 'Enter Deposit Details'}
+        {step === 4 && 'Deposit Successful'}
+      </h1>
+      <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
+        <div 
+          className="bg-primary-light h-2 rounded-full" 
+          style={{ width: `${step * 25}%` }}
+        ></div>
       </div>
+    </div>
+
 
       {step === 1 && (
+        <div className="space-y-4">
+          <div 
+            onClick={() => {
+              setDepositType('investment deposit');
+              setStep(2);
+            }}
+            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-2xl">💰</span>
+              <div>
+                <h3 className="font-medium text-gray-900 dark:text-white">Investment Deposit</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                 Will be use to investment in a plan
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => {
+              setDepositType('copytrade deposit');
+              setStep(2);
+            }}
+            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-2xl">📈</span>
+              <div>
+                <h3 className="font-medium text-gray-900 dark:text-white">Copytrade Deposit</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                   Will be use to investment in a copytrade
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {step === 2 && (
         <div className="space-y-4">
           {paymentOptions.map(option => (
             <div
               key={option._id}
               onClick={() => {
                 setPaymentMethod(option);
-                setStep(2);
+                setStep(3);
               }}
               className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
             >
@@ -131,7 +174,7 @@ const Deposit = () => {
         </div>
       )}
 
-      {step === 2 && paymentMethod && (
+      {step === 3 && paymentMethod && (
         <form className="space-y-6">
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
             <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
@@ -157,11 +200,7 @@ const Deposit = () => {
                 </div>
                 
                 <div className="py-2">
-                  {/* {paymentMethod.extra && (
-                    <div className="py-2 text-sm dark:text-blue-300">
-                      {paymentMethod.extra}
-                    </div>
-                  )} */}
+                 
                   <span className="text-sm text-blue-700 dark:text-blue-300 block mb-1">
                     Wallet Address:
                   </span>
@@ -326,7 +365,7 @@ const Deposit = () => {
         </form>
       )}
 
-      {step === 3 && (
+      {step === 4 && (
         <div className="text-center py-8">
           <BiCheckCircle className="mx-auto text-6xl text-green-500 mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">

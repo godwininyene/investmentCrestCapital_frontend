@@ -165,7 +165,6 @@ const PaymentOptions = () => {
     }
   };
 
-  console.log(selectedOption);
 
   return (
     <div className="space-y-6">
@@ -368,7 +367,7 @@ const PaymentOptions = () => {
         {selectedOption && (
           <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
             <div className="p-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center">
-              <h2 className="text-lg font-bold">Edit Payment Option</h2>
+              <h2 className="text-lg font-bold dark:text-slate-300 text-gray-500">Edit Payment Option</h2>
               <button
                 onClick={() => setEditModal(false)}
                 className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -414,7 +413,7 @@ const PaymentOptions = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block text-sm font-medium mb-1 dark:text-slate-300 text-gray-500">
                     Image/QR Code
                   </label>
                   <div className="flex flex-col items-center gap-2">
@@ -473,7 +472,7 @@ const PaymentOptions = () => {
                   <button
                     type="button"
                     onClick={() => setEditModal(false)}
-                    className="px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700"
+                    className="px-4 py-2 border dark:text-slate-300 text-gray-500 border-gray-300 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700"
                   >
                     Cancel
                   </button>

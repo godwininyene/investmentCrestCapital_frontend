@@ -47,7 +47,9 @@ export default function Transactions() {
 
     const getTypeIcon = (type) => {
         switch(type.toLowerCase()) {
-            case 'deposit':
+            case 'investment deposit':
+                return <BiPlus className="text-green-500" />;
+            case 'copytrade deposit':
                 return <BiPlus className="text-green-500" />;
             case 'withdrawal':
                 return <BiMinus className="text-red-500" />;
@@ -149,7 +151,14 @@ export default function Transactions() {
                                         <span className="capitalize">{transaction.type}</span>
                                     </td>
                                     <td className="py-3 px-4 font-medium">
-                                        ${transaction.amount.toLocaleString()}
+                                        <div className={`text-sm font-medium ${
+                                            transaction.type === 'investment deposit' || transaction.type==='copytrade deposit' ? 
+                                            'text-green-600 dark:text-green-400' : 
+                                            'text-red-600 dark:text-red-400'
+                                        }`}>
+                                            {transaction.type === 'investment deposit' || transaction.type==='copytrade deposit' ? '+' : '-'}
+                                            ${parseFloat(transaction.amount).toLocaleString()}
+                                        </div>
                                     </td>
                                      <td className="py-3 px-4 font-medium">
                                         {transaction.paymentChannel}

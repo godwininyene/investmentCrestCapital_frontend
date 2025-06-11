@@ -179,7 +179,13 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
                             <form onSubmit={submit}>
                                 <div className="mb-5">
                                     <SelectField
-                                        options={['balance', 'profit', 'referralBalance']}
+                                        options={[
+                                            {value:'balance', label:'Balance'},
+                                            {value:'copytradeBalance', label:'Copytrade Balance'},
+                                            {value:'profit', label:'Profit'},
+                                            {value: 'copytradeProfit', label:'Copytrade Profit'},
+                                            {value:'referralBalance', label:'Referral Balance'} 
+                                        ]}
                                         label={'Choose Wallet to fund'}
                                         name={'wallet_type'}
                                         classNames="dark:bg-slate-600 dark:border-slate-500"

@@ -6,7 +6,7 @@ import SubmitButton from '../../components/common/SubmitButton';
 
 const Withdrawal = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const[user, setUser] = useState();
   const [step, setStep] = useState(1);
   const [walletType, setWalletType] = useState('balance');
   const [amount, setAmount] = useState('');
@@ -17,7 +17,10 @@ const Withdrawal = () => {
   const [error, setError] = useState('');
 
   const availableBalance = user?.wallet?.[walletType] || 0;
-
+    const getMe = async()=>{
+        const res = await axios.get('api/v1/users/me');
+        setUser(res.data.data.user)  
+    }
   const fetchBankAccounts = async () => {
     try {
       const res = await axios.get('api/v1/users/me/banks');
@@ -29,6 +32,7 @@ const Withdrawal = () => {
 
   useEffect(() => {
     fetchBankAccounts();
+    getMe()
   }, []);
 
   console.log(accounts);
@@ -41,7 +45,7 @@ const Withdrawal = () => {
       const formData = new FormData();
       formData.append('type', 'withdrawal');
       formData.append('amount', amount);
-      formData.append('pay_option', walletType);
+      formData.append('payOption', walletType);
       formData.append('bank_id', bankAccount);
 
       await axios.post('api/v1/users/me/transactions', formData);
@@ -118,6 +122,42 @@ const Withdrawal = () => {
 
           <div 
             onClick={() => {
+              setWalletType('copytradeBalance');
+              setStep(2);
+            }}
+            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-2xl">💰</span>
+              <div>
+                <h3 className="font-medium text-gray-900 dark:text-white">Copytrade Balance</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Available: ${user?.wallet?.copytradeBalance?.toLocaleString() || '0'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => {
+              setWalletType('copytradeProfit');
+              setStep(2);
+            }}
+            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-2xl">📈</span>
+              <div>
+                <h3 className="font-medium text-gray-900 dark:text-white">Copytrade Profit</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Available: ${user?.wallet?.copytradeProfit?.toLocaleString() || '0'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => {
               setWalletType('referralBalance');
               setStep(2);
             }}
@@ -182,7 +222,7 @@ const Withdrawal = () => {
               <option value="">Select Bank Account</option>
               {accounts.map(account => (
                 <option key={account.id} value={account.id}>
-                  {account.bankName} - {account.accountNumber}
+                  {account.network} - {account.walletAddress}
                 </option>
               ))}
             </select>

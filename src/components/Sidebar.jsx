@@ -20,6 +20,7 @@ const SideBar = ({ user, isToggle, setToggle }) => {
     const user_links = [
         { name: "Dashboard", path: "investor/dashboard", icon: <FaTachometerAlt /> },
         { name: "Investments", path: "investor/investments", icon: <FaMoneyCheckAlt /> },
+        { name: "Copytrade", path: "investor/copy_trades", icon: <FaMoneyCheckAlt /> },
         { name: "Transactions", path: "investor/transactions", icon: <FaMoneyBillTransfer /> },
         { name: "Settings", path: "investor/settings", icon: <FaCog /> },
     ];
@@ -29,6 +30,8 @@ const SideBar = ({ user, isToggle, setToggle }) => {
         { name: "Manage Users", path: "admin/users", icon: <FaCog /> },
         { name: "Transactions", path: "admin/transactions", icon: <FaExchangeAlt /> },
         { name: "Investments", path: "admin/investments", icon: <FaMoneyCheckAlt /> },
+        { name: "Copy Trades", path: "admin/copy_trade", icon: <FaMoneyCheckAlt /> },
+        { name: "Copy Trade Investments", path: "admin/copy_trade_investments", icon: <FaMoneyCheckAlt /> },
         // { name: "Settings", path: "admin/settings", icon: <FaCog /> },
     ];
 
@@ -74,7 +77,7 @@ const SideBar = ({ user, isToggle, setToggle }) => {
 
                 {/* Sidebar Links */}
                 <nav className="flex flex-col justify-between flex-grow">
-                    <div className="space-y-2">
+                    <div className="">
                         {links.map((link) => (
                             <Link
                                 key={link.name}

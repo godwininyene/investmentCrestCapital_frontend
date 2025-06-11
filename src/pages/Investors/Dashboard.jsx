@@ -13,6 +13,7 @@ export default function Dashboard() {
     const user = JSON.parse(localStorage.getItem('user'));
     const [showTip, setShowTip] = useState(false);
     const [deposits, setDeposits] = useState();
+    const[total_copytrade_deposit, setCopytradeDeposits] =useState()
     const [investments, setInvestments] = useState([]);
     const [wallet, setWallet] = useState(null);
     const [recentTransactions, setRecentTransactions] = useState([]);
@@ -36,6 +37,7 @@ export default function Dashboard() {
             ]);
             setInvestments(statsRes.data.data.stats.investments);
             setDeposits(statsRes.data.data.stats.total_deposit);
+            setCopytradeDeposits(statsRes.data.data.stats.total_copytrade_deposit);
             setWallet(statsRes.data.data.stats.wallet);
             setRecentTransactions(transactionsRes.data.data.transactions);
             setFetched(true);
@@ -118,6 +120,12 @@ export default function Dashboard() {
                     description="Current Balance Amount"
                 />
                 <StatCard
+                    icon={<BiWallet className="w-8 h-8" />}
+                    title="Copytrade Balance"
+                    value={`$${wallet?.copytradeBalance.toLocaleString() || 0}`}
+                    description="Current  Balance Amount"
+                />
+                <StatCard
                     icon={<FaUsersLine className="w-8 h-8" />}
                     title="Referral Balance"
                     value={`$${wallet?.referralBalance.toLocaleString() || 0}`}
@@ -129,11 +137,25 @@ export default function Dashboard() {
                     value={`$${deposits?.toLocaleString() || 0}`}
                     description="Total Deposits"
                 />
+
+                <StatCard
+                    icon={<BsCashCoin className="w-8 h-8" />}
+                    title="Total Copytrade Deposit"
+                    value={`$${total_copytrade_deposit?.toLocaleString() || 0}`}
+                    description="Current Deposits"
+                />
                 <StatCard
                     icon={<BiMoneyWithdraw className="w-8 h-8" />}
                     title="Total Accrued Profit"
                     value={`$${wallet?.profit.toLocaleString() || 0}`}
                     description="Total Profits"
+                />
+
+                <StatCard
+                    icon={<BiMoneyWithdraw className="w-8 h-8" />}
+                    title="Copytrade Profit"
+                    value={`$${wallet?.copytradeProfit.toLocaleString() || 0}`}
+                    description="Current Profits"
                 />
             </div>
 

@@ -26,6 +26,9 @@ import Users from './pages/Admin/Users';
 import Plans from './pages/Admin/Plans';
 import PaymentOptions from './pages/Admin/PaymentOptions';
 import FaqManager from './pages/Admin/FaqManager';
+import AdminSettings from './pages/Admin/AdminSettings';
+import CopyTrade from './pages/Admin/CopyTrade';
+import AdminCopytradeInvestments from './pages/Admin/CopytradeInvestments';
 
 //Investors pages
 import InvestorDashboard from './pages/Investors/Dashboard';
@@ -34,15 +37,13 @@ import InvestorTransactions from './pages/Investors/Transactions'
 import Deposit from './pages/Investors/Deposit';
 import Withdrawal from './pages/Investors/Withdrawal';
 import InvestorSettings from './pages/Investors/Settings';
-import AdminSettings from './pages/Admin/AdminSettings';
+import CopyTradeInvestments from './pages/Investors/CopytradeInvestments';
 
 
 //Others
 import NotFound from './pages/NotFound';
 import Error from './components/Error';
 import { requireAuth } from './utils/protect';
-
-
 
 
 
@@ -78,12 +79,15 @@ function App() {
           <Route path='payment_options' element={<PaymentOptions />}></Route>
           <Route path='manage_faq' element={<FaqManager />}></Route>
           <Route path='settings' element={<AdminSettings />}></Route>
+          <Route path='copy_trade' element={<CopyTrade />}></Route>
+          <Route path='copy_trade_investments' element={<AdminCopytradeInvestments />}></Route>
         </Route>
 
         {/* Investor Related Routes */}
          <Route path='investor' loader={({ request }) => requireAuth(request, 'user')}>
           <Route path='dashboard' element={<InvestorDashboard />}></Route>
           <Route path='investments' element={<InvestorInvestments />}></Route>
+          <Route path='copy_trades' element={<CopyTradeInvestments />}></Route>
           <Route path='transactions' element={<InvestorTransactions />}></Route>
           <Route path='deposit' element={<Deposit/>}></Route>
           <Route path='withdrawal' element={<Withdrawal/>}></Route>

@@ -6,8 +6,6 @@ import axios from '../../lib/axios';
 import SubmitButton from '../../components/common/SubmitButton';
 
 const Invest = ({onBack, wallet, onInvestComplete}) => {
-    // const user = JSON.parse(localStorage.getItem('user'));
- 
     const[user, setUser] = useState();
     const [loadingPlans, setPlanState] = useState(false);
     const [plans, loadPlans] = useState([]);
@@ -27,8 +25,6 @@ const Invest = ({onBack, wallet, onInvestComplete}) => {
 
     const getMe = async()=>{
         const res = await axios.get('api/v1/users/me');
-        //Sample response;
-        
         setUser(res.data.data.user)  
     }
     const fetchPlan = async () => {
@@ -100,7 +96,7 @@ const Invest = ({onBack, wallet, onInvestComplete}) => {
                     Start New Investment
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400">
-                    Select an investment plan and enter the amount you want to invest
+                    Select an investment plan by clicking on the plan and enter the amount you want to invest
                 </p>
             </div>
 

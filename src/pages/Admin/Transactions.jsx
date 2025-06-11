@@ -154,7 +154,9 @@ export default function Transactions() {
 
   const getTransactionIcon = (type) => {
     switch(type) {
-      case 'deposit':
+      case 'investment deposit':
+        return <BiDownArrowAlt className="text-green-500 text-xl" />;
+      case 'copytrade deposit':
         return <BiDownArrowAlt className="text-green-500 text-xl" />;
       case 'withdrawal':
         return <BiUpArrowAlt className="text-red-500 text-xl" />;
@@ -283,7 +285,26 @@ export default function Transactions() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Total Deposits</p>
               <p className="text-2xl font-bold">
                 ${filteredTransactions
-                  .filter(tx => tx.type === 'deposit')
+                  .filter(tx => tx.type === 'investment deposit')
+                  .reduce((sum, tx) => sum + parseFloat(tx.amount), 0)
+                  .toLocaleString()
+                }
+              </p>
+            </div>
+            <div className="p-3 rounded-full h-12 w-12 mb-2 lg:mb-0 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">
+              <BiDownArrowAlt className="h-6 w-6" />
+            </div>
+          </div>
+        </div>
+
+
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-4">
+          <div className="flex lg:items-center lg:justify-between flex-col-reverse lg:flex-row">
+            <div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Total Copytrade Deposits</p>
+              <p className="text-2xl font-bold">
+                ${filteredTransactions
+                  .filter(tx => tx.type === 'copytrade deposit')
                   .reduce((sum, tx) => sum + parseFloat(tx.amount), 0)
                   .toLocaleString()
                 }
@@ -390,11 +411,11 @@ export default function Transactions() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className={`text-sm font-medium ${
-                        transaction.type === 'deposit' ? 
+                        transaction.type === 'investment deposit' || transaction.type==='copytrade deposit' ? 
                         'text-green-600 dark:text-green-400' : 
                         'text-red-600 dark:text-red-400'
                       }`}>
-                        {transaction.type === 'deposit' ? '+' : '-'}
+                        {transaction.type === 'investment deposit' || transaction.type==='copytrade deposit' ? '+' : '-'}
                         ${parseFloat(transaction.amount).toLocaleString()}
                       </div>
                     </td>
@@ -539,11 +560,11 @@ export default function Transactions() {
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Amount</p>
                       <p className={`text-xl font-bold ${
-                        selectedTransaction.type === 'deposit' ? 
+                        selectedTransaction.type === 'investment deposit' || selectedTransaction.type==='copytrade deposit' ? 
                         'text-green-600 dark:text-green-400' : 
                         'text-red-600 dark:text-red-400'
                       }`}>
-                        {selectedTransaction.type === 'deposit' ? '+' : '-'}
+                        {selectedTransaction.type === 'investment deposit' || selectedTransaction.type==='copytrade deposit' ? '+' : '-'}
                         ${parseFloat(selectedTransaction.amount).toLocaleString()}
                       </p>
                     </div>
@@ -551,7 +572,7 @@ export default function Transactions() {
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Payment Method</p>
                       <p className="text-sm text-gray-900 dark:text-white capitalize">
-                        {selectedTransaction.type === 'deposit' ? selectedTransaction.paymentChannel : selectedTransaction.accountType}
+                        {selectedTransaction.type === 'investment deposit' || selectedTransaction.type==='copytrade deposit' ? selectedTransaction.paymentChannel : selectedTransaction.accountType}
 
                       </p>
                     </div>
