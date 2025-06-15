@@ -94,7 +94,7 @@ const Withdrawal = () => {
             <div className="flex items-center gap-4">
               <span className="text-2xl">💰</span>
               <div>
-                <h3 className="font-medium text-gray-900 dark:text-white">Wallet Balance</h3>
+                <h3 className="font-medium text-gray-900 dark:text-white">Investment Balance</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Available: ${user?.wallet?.balance?.toLocaleString() || '0'}
                 </p>
@@ -102,7 +102,7 @@ const Withdrawal = () => {
             </div>
           </div>
 
-          <div 
+          {/* <div 
             onClick={() => {
               setWalletType('profit');
               setStep(2);
@@ -118,7 +118,7 @@ const Withdrawal = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div 
             onClick={() => {
@@ -138,7 +138,7 @@ const Withdrawal = () => {
             </div>
           </div>
 
-          <div 
+          {/* <div 
             onClick={() => {
               setWalletType('copytradeProfit');
               setStep(2);
@@ -154,7 +154,7 @@ const Withdrawal = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div 
             onClick={() => {
@@ -179,9 +179,15 @@ const Withdrawal = () => {
       {step === 2 && (
         <form  className="space-y-6">
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-            <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
-              Withdrawal From {walletType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+           <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
+              Withdrawal From{' '}
+              {walletType === 'balance'
+                ? 'Investment Balance'
+                : walletType
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, str => str.toUpperCase())}
             </h3>
+
             <div className="flex justify-between py-2">
               <span className="text-sm text-blue-700 dark:text-blue-300">Available:</span>
               <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
@@ -211,7 +217,7 @@ const Withdrawal = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Bank Account
+              Wallet Address
             </label>
             <select
               value={bankAccount}
@@ -219,7 +225,7 @@ const Withdrawal = () => {
               className="w-full py-3 px-4 bg-white dark:bg-slate-700 rounded-lg border border-gray-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
             >
-              <option value="">Select Bank Account</option>
+              <option value="">Select wallet address</option>
               {accounts.map(account => (
                 <option key={account.id} value={account.id}>
                   {account.network} - {account.walletAddress}
@@ -228,7 +234,7 @@ const Withdrawal = () => {
             </select>
             {accounts.length === 0 && (
               <p className="text-sm text-red-500 mt-1">
-                No bank accounts found. Please add a bank account first.
+                No wallet found. Please add wallet first.
               </p>
             )}
           </div>

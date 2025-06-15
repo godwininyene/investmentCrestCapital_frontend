@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaTachometerAlt, FaMoneyCheckAlt, FaExchangeAlt, FaCog } from "react-icons/fa";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import LoadingIndicator from "./common/LoadingIndicator";
-import logo from './../assets/images/logo.png';
+import logo from './../assets/images/logo.jpg';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { logout } from '../utils/logout';
 import { useState, useEffect } from "react";
@@ -69,8 +69,7 @@ const SideBar = ({ user, isToggle, setToggle }) => {
                 {/* Brand Name */}
                 <section className="bg-sky-950 p-3 rounded-md shadow mb-4">
                     <div className="flex items-center flex-col">
-                        {/* <img src={logo} alt="Logo" className="h-10" /> */}
-                        <div className='h-14 w-14 flex items-center justify-center rounded-full bg-primary-dark'>ICC</div>
+                        <img src={logo} alt="Logo" className="h-10" />
                         <h2 className="text-white font-bold text-xs ml-1">InvestmentCrestCapital</h2>
                     </div>
                 </section>

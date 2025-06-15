@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from './../assets/images/logo.png'
+import logo from './../assets/images/logo.jpg'
 import {LuMenu} from 'react-icons/lu';
 import {MdClose} from 'react-icons/md';
 import GoogleTranslate from './GoogleTranslate';
@@ -30,8 +30,8 @@ const Header = () => {
             <div className='max-w-[1140px] mx-auto w-full relative'> 
                 <nav className='flex items-center justify-between flex-wrap lg:flex-nowrap px-5 py-4 relative'>
                     <Link to="/" className='mr-4 flex items-center'>
-                        <div className='h-12 w-12 text-white flex items-center justify-center rounded-full bg-primary-dark'>ICC</div>
-                        {/* <img src={logo} alt="" className="h-10"/> */}
+                        
+                        <img src={logo} alt="" className="h-10"/>
                         <h2 className='text-white font-bold text-xs ml-1'>InvestmentCrestCapital</h2>
                     </Link>
 

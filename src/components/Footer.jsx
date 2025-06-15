@@ -8,13 +8,17 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import logo from './../assets/images/logo.jpg';
 
 const Footer = () => {
   return (
     <footer className="bg-[#0f419a] text-white py-12 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div data-aos="fade-right" data-aos-duration="1000">
-          <h2 className="text-xl font-bold">InvestmentCrestCapital</h2>
+           <Link to="/" className='mr-4 flex items-center'>                 
+              <img src={logo} alt="" className="h-10"/>
+              <h2 className='text-white font-bold text-xl ml-1'>InvestmentCrestCapital</h2>
+            </Link>
           <p className="mt-3 text-gray-300">
             InvestmentCrestCapital is your trusted gateway to the world of cryptocurrency
             investments. With a secure platform, expert-backed strategies, and a
