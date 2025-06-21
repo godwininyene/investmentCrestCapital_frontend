@@ -4,6 +4,7 @@ import { BiArrowBack, BiCheckCircle } from 'react-icons/bi';
 import axios from '../../lib/axios';
 import SubmitButton from '../../components/common/SubmitButton';
 import { BiSave } from 'react-icons/bi';
+import { toast } from 'react-toastify'
 
 const Deposit = () => {
   const navigate = useNavigate();

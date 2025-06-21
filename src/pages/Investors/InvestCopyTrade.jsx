@@ -4,6 +4,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import { BiArrowBack } from 'react-icons/bi';
 import axios from '../../lib/axios';
 import SubmitButton from '../../components/common/SubmitButton';
+ import { toast } from 'react-toastify'
 
 const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
     const [user, setUser] = useState();
@@ -12,11 +13,10 @@ const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
     const [selectedTrade, setSelectedTrade] = useState(null);
     const [fetched, setFetched] = useState(false);
     const [processing, setProcessing] = useState(false);
-    const [message, setErrorMessage] = useState('');
     const [amount, setAmount] = useState('');
     const [stopLoss, setStopLoss] = useState('90.0');
     const [totalAmount, setTotalAmount] = useState(0);
-    const[errors, setErrors] = useState({})
+   
 
     const back = () => onBack();
 
@@ -46,7 +46,7 @@ const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
             setTrades(res.data.data.copytrades);
             setFetched(true);
         } catch (err) {
-            console.error(err);
+            console.log(err);
         } finally {
             setTradeState(false);
         }
@@ -73,22 +73,22 @@ const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
         const amountNum = parseFloat(amount.replace(/,/g, ''));
 
         if (!selectedTrade) {
-            alert("Please select a copy trade first");
+            toast.error("Please select a copy trade first");
             return;
         }
 
         if (amountNum <= 0) {
-            alert("Please enter a valid amount");
+            toast.error("Please enter a valid amount");
             return;
         }
 
         if (amountNum < selectedTrade.minDeposit) {
-            alert(`Minimum investment amount is ${formatCurrency(selectedTrade.minDeposit)}`);
+            toast.error(`Minimum investment amount is ${formatCurrency(selectedTrade.minDeposit)}`);
             return;
         }
 
         if (user?.wallet?.copytradeBalance < amountNum) {
-            alert(`Insufficient copy trading wallet balance. Please fund your copy trading wallet to continue.`);
+            toast.error(`Insufficient copy trading wallet balance. Please fund your copy trading wallet to continue.`);
             return;
         }
 
@@ -101,18 +101,11 @@ const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
                 fees: selectedTrade.fees
             };
             await axios.post(`api/v1/users/me/copy-trade-investments`, data);
-            alert("Copy trade investment successful!");
+            toast.success("Copy trade investment successful!");
             onInvestComplete();
         } catch (err) {
-            console.error(err);
-            // Extract errors from the backend response
-            // if (err.response && err.response.data.message && err.response.data.errors) {
-            //     setErrors(err.response.data.errors);
-            // } else {
-            //     setErrors(err);
-            //     console.error('Unexpected Error:', err);
-            // }
-            alert("Investment failed. Please try again.");
+            console.log(err);
+            toast.error(err?.response?.data?.message || "Investment failed. Please try again.");
         } finally {
             setProcessing(false);
         }
@@ -347,13 +340,6 @@ const InvestCopyTrade = ({ onBack, wallet, onInvestComplete }) => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Error Message */}
-                        {message && (
-                            <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg">
-                                {message}
-                            </div>
-                        )}
 
                         {/* Submit Button */}
                         <SubmitButton

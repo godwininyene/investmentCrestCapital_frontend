@@ -23,6 +23,7 @@ import SelectField from '../../components/common/SelectField';
 import SubmitButton from '../../components/common/SubmitButton';
 import Alert from '../../components/common/Alert';
 import EmptyState from '../../components/common/EmptyState';
+import { toast } from 'react-toastify';
 
 const PaymentOptions = () => {
   const [processing, setProcessing] = useState(false);
@@ -33,7 +34,6 @@ const PaymentOptions = () => {
   const [deleting, setDeleting] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [editModal, setEditModal] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
 
   // Payment option types
@@ -57,7 +57,8 @@ const PaymentOptions = () => {
         setFetched(true);
       }
     } catch (err) {
-      console.error('Error fetching payment options:', err);
+      console.log('Error fetching payment options:', err);
+      toast.error(err.response?.data?.message || 'Error fetching payment options');
     } finally {
       setLoadingOptions(false);
     }
@@ -67,18 +68,15 @@ const PaymentOptions = () => {
     e.preventDefault();
     setProcessing(true);
     setErrors({});
-    setSuccessMessage('');
-
     const formData = new FormData(e.target);
 
     try {
       const res = await axios.post('api/v1/paymentOptions', formData);
       if (res.data.status === 'success') {
-        setSuccessMessage('Payment option added successfully!');
+        toast.success('Payment option added successfully!');
         setPaymentOptions(prev => [res.data.data.paymentOption, ...prev]);
         e.target.reset();
         setShowForm(false);
-        setTimeout(() => setSuccessMessage(''), 3000);
       }
     } catch (err) {
       if (err.response?.data?.errors) {
@@ -90,7 +88,8 @@ const PaymentOptions = () => {
         });
         setErrors(newErrors);
       }
-      console.error('Error saving payment option:', err);
+      console.log('Error saving payment option:', err);
+      toast.error(err.response?.data?.message || 'Error saving payment option');
     } finally {
       setProcessing(false);
     }
@@ -100,21 +99,18 @@ const PaymentOptions = () => {
     e.preventDefault();
     setProcessing(true);
     setErrors({});
-    setSuccessMessage('');
-
     const formData = new FormData(e.target);
 
     try {
       const res = await axios.patch(`api/v1/paymentOptions/${selectedOption.id}`, formData);
       if (res.data.status === 'success') {
-        setSuccessMessage('Payment option updated successfully!');
+        toast.success('Payment option updated successfully!');
         setPaymentOptions(prev => 
           prev.map(option => 
             option.id === selectedOption.id ? res.data.data.paymentOption : option
           )
         );
         setEditModal(false);
-        setTimeout(() => setSuccessMessage(''), 3000);
       }
     } catch (err) {
       if (err.response?.data?.errors) {
@@ -126,7 +122,8 @@ const PaymentOptions = () => {
         });
         setErrors(newErrors);
       }
-      console.error('Error updating payment option:', err);
+      console.log('Error updating payment option:', err);
+      toast.error(err.response?.data?.message || 'Error updating payment option');
     } finally {
       setProcessing(false);
     }
@@ -140,11 +137,10 @@ const PaymentOptions = () => {
       await axios.delete(`api/v1/paymentOptions/${selectedOption.id}`);
       setPaymentOptions(prev => prev.filter(option => option.id !== selectedOption.id));
       setEditModal(false);
-      setSuccessMessage('Payment option deleted successfully!');
-      setTimeout(() => setSuccessMessage(''), 3000);
+      toast.success('Payment option deleted successfully!');
     } catch (err) {
-      console.error('Error deleting payment option:', err);
-      alert(err.response?.data?.message || 'Failed to delete payment option');
+      console.log('Error deleting payment option:', err);
+      toast.error(err.response?.data?.message || 'Failed to delete payment option');
     } finally {
       setDeleting(false);
     }
@@ -174,9 +170,6 @@ const PaymentOptions = () => {
           <BsBank className="text-blue-600 dark:text-blue-400" /> 
           Payment Options
         </h1>
-        {successMessage && (
-          <Alert type="success" message={successMessage} />
-        )}
       </div>
 
       {/* Content */}
@@ -447,6 +440,7 @@ const PaymentOptions = () => {
                   placeholder="e.g. Branch name, network type"
                   defaultValue={selectedOption.extra}
                   error={errors.extra}
+                  isRequired={false}
                   variant="outline"
                   classNames="dark:bg-slate-700 dark:border-slate-700"
                 />

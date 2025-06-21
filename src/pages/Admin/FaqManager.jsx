@@ -8,6 +8,7 @@ import axios from '../../lib/axios';
 import InputField from '../../components/common/InputField';
 import SubmitButton from '../../components/common/SubmitButton';
 import InputError from '../../components/common/InputError';
+import { toast } from 'react-toastify';
 
 
 const FaqManager = () => {
@@ -47,10 +48,12 @@ const FaqManager = () => {
     await axios.post('api/v1/faqs', form)
     .then((res) => {
       setProcessing(false);
+      toast.success('Faq added successfully!');
       loadQuestions(prev => [res.data.data.faq, ...prev ]);
       e.target.reset();
     })
     .catch((err) => {
+      toast.error(err.response?.data?.message || 'Error saving faq');
       setProcessing(false);
       setErrors(err.response.data.errors);
     });
@@ -65,7 +68,7 @@ const FaqManager = () => {
       if (response.status === 204) {
         // Update the questions state to exclude the deleted question
         loadQuestions(questions => questions.filter(el => el.id !== id));
-        alert("Faq was deleted successfully!");
+        toast.success('Faq was deleted successfully!');
       }
       setDeleting(false);
     } catch (err) {
@@ -73,7 +76,7 @@ const FaqManager = () => {
       if (err && !err.response) {
         alert(err);
       } else {
-          alert(err.response?.data?.message)
+        toast.error(err.response?.data?.message || 'Error deleting faq');
         setErrors(err.response.data.errors);
       }
     }

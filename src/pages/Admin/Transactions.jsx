@@ -23,6 +23,7 @@ import EmptyState from '../../components/common/EmptyState';
 import SelectField from '../../components/common/SelectField';
 import defaultAvatar from '../../assets/images/default.jpg';
 import coverImage from '../../assets/images/forex.jpeg';
+import { toast } from 'react-toastify';
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -125,9 +126,10 @@ export default function Transactions() {
         );
         setSelectedTransaction(res.data.data.transaction);
          setDetailModal(false)
+        toast.success('Transaction approved successfully!');
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to approve transaction");
+      toast.error(error.response?.data?.message || "Failed to approve transaction");
     } finally {
       setApproving(false);
      
@@ -144,9 +146,10 @@ export default function Transactions() {
         );
         setSelectedTransaction(res.data.data.transaction);
          setDetailModal(false)
+         toast.success('Transaction declined successfully!');
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to decline transaction");
+      toast.error(error.response?.data?.message || "Failed to decline transaction");
     } finally {
       setDeclining(false);
     }

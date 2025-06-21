@@ -4,6 +4,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import { BiArrowBack } from 'react-icons/bi';
 import axios from '../../lib/axios';
 import SubmitButton from '../../components/common/SubmitButton';
+import { toast } from 'react-toastify'
 
 const Invest = ({onBack, wallet, onInvestComplete}) => {
     const[user, setUser] = useState();
@@ -45,20 +46,21 @@ const Invest = ({onBack, wallet, onInvestComplete}) => {
         const amountNum = parseFloat(amount);
 
         if (!selectedPlan) {
-            alert("Please select a plan first");
+            toast.error("Please select a plan first");
             return;
         }
         
         if (user?.wallet?.balance < amountNum) {
-            alert(`Insufficient wallet balance. Please enter amount $${user?.wallet?.balance}, or fund your wallet to continue.`);   
+            toast.error(`Insufficient wallet balance. Please enter amount $${user?.wallet?.balance}, or fund your wallet to continue.`);
             return;
         }
         
         if (amountNum < selectedPlan.minDeposit) {
-            alert(`The selected plan requires a minimum deposit of $${selectedPlan.minDeposit}`);
+           
+            toast.error(`The selected plan requires a minimum deposit of $${selectedPlan.minDeposit}`);
             return;
         } else if (amountNum > selectedPlan.maxDeposit) {
-            alert(`You can't invest more than $${selectedPlan.maxDeposit} on this plan`);
+            toast.error(`You can't invest more than $${selectedPlan.maxDeposit} on this plan`);
             return;
         }
 
@@ -69,11 +71,11 @@ const Invest = ({onBack, wallet, onInvestComplete}) => {
                 amount: amountNum
             };
             await axios.post(`api/v1/users/me/investments`, data);
-            alert("Investment successful!");
+            toast.success("Investment successful!");
             onInvestComplete();
         } catch (err) {
-            console.error(err);
-            alert("Investment failed. Please try again.");
+            console.log(err);
+            toast.error(err?.response?.data?.message || "Investment failed. Please try again.");
         } finally {
             setProcessing(false);
         }

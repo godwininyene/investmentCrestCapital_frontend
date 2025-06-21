@@ -4,9 +4,9 @@ import { FaUser, FaLock, FaBell, FaEnvelope } from 'react-icons/fa';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import axios from '../../lib/axios';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
-import { toast } from 'react-hot-toast';
 import InputField from '../../components/common/InputField';
 import defaultAvatar from '../../assets/images/default.jpg';
+import { toast } from 'react-toastify'
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState('profile');
@@ -30,14 +30,6 @@ export default function Settings() {
     }
   });
 
-  // Password form
-  // const { 
-  //   register: registerPassword, 
-  //   handleSubmit: handlePasswordSubmit, 
-  //   // formState: { errors: passwordErrors }, 
-  //   reset: resetPassword,
-  //   watch
-  // } = useForm();
 
   const[passwordErrors, setPasswordErrors] = useState({
     password:'',
@@ -87,11 +79,9 @@ export default function Settings() {
         setAvatarPreview(updatedUser.photo || defaultAvatar);
         setSelectedFile(null);
         toast.success('Profile updated successfully');
-        alert('Profile updated successfully')
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to update profile');
-      alert(error.response?.data?.message || 'Failed to update profile')
     } finally {
       setLoading(false);
     }
@@ -108,12 +98,10 @@ export default function Settings() {
 
       if (response.data.status === 'success') {
         toast.success('Password updated successfully');
-        alert('Password updated successfully')
         e.target.reset();
       }
     } catch (error) {
       console.log('ERROR', error);
-      
       toast.error(error.response?.data?.message || 'Failed to update password');
       alert(error.response?.data?.message || 'Failed to update password')
       if(error.response?.data?.errors){

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BiArrowBack, BiCheckCircle } from 'react-icons/bi';
 import axios from '../../lib/axios';
 import SubmitButton from '../../components/common/SubmitButton';
+import { toast } from 'react-toastify'
 
 const Withdrawal = () => {
   const navigate = useNavigate();
@@ -49,9 +50,11 @@ const Withdrawal = () => {
       formData.append('bank_id', bankAccount);
 
       await axios.post('api/v1/users/me/transactions', formData);
+      toast.success('Withdrawal placed successfully');
       setSuccess(true);
       setStep(3);
     } catch (err) {
+      toast.error(error.response?.data?.message || 'Withdrawal failed. Please try again.');
       setError(err.response?.data?.message || 'Withdrawal failed. Please try again.');
     } finally {
       setProcessing(false);
@@ -102,24 +105,7 @@ const Withdrawal = () => {
             </div>
           </div>
 
-          {/* <div 
-            onClick={() => {
-              setWalletType('profit');
-              setStep(2);
-            }}
-            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
-          >
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">📈</span>
-              <div>
-                <h3 className="font-medium text-gray-900 dark:text-white">Investment Profit</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Available: ${user?.wallet?.profit?.toLocaleString() || '0'}
-                </p>
-              </div>
-            </div>
-          </div> */}
-
+  
           <div 
             onClick={() => {
               setWalletType('copytradeBalance');
@@ -137,24 +123,6 @@ const Withdrawal = () => {
               </div>
             </div>
           </div>
-
-          {/* <div 
-            onClick={() => {
-              setWalletType('copytradeProfit');
-              setStep(2);
-            }}
-            className="p-4 border border-gray-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
-          >
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">📈</span>
-              <div>
-                <h3 className="font-medium text-gray-900 dark:text-white">Copytrade Profit</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Available: ${user?.wallet?.copytradeProfit?.toLocaleString() || '0'}
-                </p>
-              </div>
-            </div>
-          </div> */}
 
           <div 
             onClick={() => {
@@ -239,11 +207,6 @@ const Withdrawal = () => {
             )}
           </div>
 
-          {error && (
-            <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg">
-              {error}
-            </div>
-          )}
           <SubmitButton
             label="Request Withdrawal"
             processing={processing}

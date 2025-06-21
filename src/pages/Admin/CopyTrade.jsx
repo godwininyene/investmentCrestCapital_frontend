@@ -8,6 +8,7 @@ import Modal from '../../components/CustomModal';
 import InputField from '../../components/common/InputField';
 import SelectField from '../../components/common/SelectField';
 import SubmitButton from '../../components/common/SubmitButton';
+import { toast } from 'react-toastify';
 
 const CopyTrade = () => {
   const [processing, setProcessing] = useState(false);
@@ -47,6 +48,7 @@ const CopyTrade = () => {
       const res = await axios.post('api/v1/copytrades', formData);
       if (res.data.status === 'success') {
         setTrades(prev => [res.data.data.copytrade, ...prev]);
+        toast.success('Copytrade added successfully!');
         e.target.reset();
       }
     } catch (err) {
@@ -54,6 +56,7 @@ const CopyTrade = () => {
         setErrors(err.response.data.errors);
       } else {
         setErrors(err);
+        toast.error(err.response?.data?.message || 'Error saving copytrade');
         console.error('Unexpected Error:', err);
       }
     } finally {
@@ -74,6 +77,7 @@ const CopyTrade = () => {
         setTrades(prev => prev.map(trade => 
           trade.id === selectedTrade.id ? res.data.data.copytrade : trade
         ));
+         toast.success('Copytrade updated successfully!');
         setEditModal(false);
       }
     } catch (err) {
@@ -81,7 +85,8 @@ const CopyTrade = () => {
         setErrors(err.response.data.errors);
       } else {
         setErrors(err);
-        console.error('Unexpected Error:', err);
+        toast.error(err.response?.data?.message || 'Error updating copytrade');
+        console.log('Unexpected Error:', err);
       }
     } finally {
       setProcessing(false);
@@ -95,8 +100,10 @@ const CopyTrade = () => {
     try {
       await axios.delete(`api/v1/copytrades/${trade.id}`);
       setTrades(prev => prev.filter(t => t.id !== trade.id));
+      toast.success('Copytrade updated successfully!');
     } catch (err) {
       console.log(err);
+       toast.error(err.response?.data?.message || 'Error deleting copytrade');
     } finally {
       setDeleting(false);
     }

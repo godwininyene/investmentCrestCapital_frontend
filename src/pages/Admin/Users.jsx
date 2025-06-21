@@ -24,6 +24,7 @@ import axios from '../../lib/axios';
 import coverImage from './../../assets/images/forex.jpeg';
 import defaultAvatar from './../../assets/images/default.jpg'
 import UserDetail from './UserDetails';
+import { toast } from 'react-toastify';
 
 export default function Users() {
     const [displayStyle, setDisplayStyle] = useState('list');
@@ -104,10 +105,10 @@ export default function Users() {
             if (res.data.status === 'success') {
                 updateUserInList(res.data.data.user);
                 setSelectedUser(res.data.data.user);
-                alert(`User's status changed successfully!`)
+                toast.success(`User's status changed successfully!`);
             }
         } catch (error) {
-            alert(error.response?.data?.message || "Failed to update status");
+            toast.error(error.response?.data?.message || "Failed to update status");
             console.error(error);
         } finally {
             setUpdating(false);
@@ -122,11 +123,12 @@ export default function Users() {
             const res = await axios.delete(`api/v1/users/${user.id}`);
             if (res.status === 204) {
                 updateUserInList(user, 'delete');
-                alert("User deleted successfully");
+                toast.success("User deleted successfully");
+                alert();
                 setUserModal(false);
             }
         } catch (error) {
-            alert(error.response?.data?.message || "Failed to delete user");
+            toast.error(error.response?.data?.message || "Failed to delete user");
             console.error(error);
         } finally {
             setDeleting(false);

@@ -7,23 +7,22 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import axios from '../../lib/axios';
 import InputField from '../../components/common/InputField';
 import SelectField from '../../components/common/SelectField';
+import { toast } from 'react-toastify';
 
 const FundAccount = ({user, onBack, onFunded = () => Object}) => {
     let back = () => {
         onBack();
     }
     const [processing, setProcessing] = useState(false);
-    const [message, setErrorMessage] = useState('');
     
     let submit = async (e) => {
         e.preventDefault();
         let form =  new FormData(e.target)
-        setErrorMessage('')
         setProcessing(true);
         await axios.patch(`api/v1/users/${user.id}/wallets`, form)
         .then((res) => {
             if(res.data.status ==='success'){
-                alert('Wallet funded successfully!')
+                toast.success('Wallet funded successfully!');
                 e.target.reset();
                 setProcessing(false);              
                 onFunded(res.data.data.user)
@@ -31,8 +30,7 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
         })
         .catch((err) => {
             console.log(err)
-            setErrorMessage(err.response?.data?.message)
-            alert("Something went very wrong!")
+            toast.error(err.response?.data?.message || 'Error updating wallet');
             setProcessing(false);
         });
     }
@@ -201,12 +199,6 @@ const FundAccount = ({user, onBack, onFunded = () => Object}) => {
                                     />
                                 </div>
                                
-                                {message && (
-                                    <p className="text-sm text-red-600 dark:text-red-400 mb-3">
-                                        {message}
-                                    </p>
-                                )}
-                                
                                 <div className='text-left'>
                                     <button 
                                         disabled={processing} 

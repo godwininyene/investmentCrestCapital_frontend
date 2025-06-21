@@ -8,6 +8,7 @@ import InputField from '../../components/common/InputField';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { toast } from 'react-toastify'
 
 const BankAccounts = () => {
   const [addNewBank, setAddBankState] = useState(false);
@@ -45,10 +46,10 @@ const BankAccounts = () => {
               const res = await axios.delete(`api/v1/users/me/banks/${accountId}`);
               if (res.status === 204) {
                 setBanks(banks.filter(bank => bank.id !== accountId));
-                alert('Account deleted successfully');
+                toast.success('Wallet deleted successfully');
               }
             } catch (error) {
-              alert(error?.response?.data?.message || 'Failed to delete account');
+              toast.error(error?.response?.data?.message || 'Failed to delete wallet');
               console.error(error);
             } finally {
               setDeletingId(null);
@@ -76,7 +77,7 @@ const BankAccounts = () => {
       const res = await axios.post('api/v1/users/me/banks', jsonData);
       if (res.data.status === 'success') {
         setBanks([...banks, res.data.data.account]);
-        alert("Account added successfully");
+        toast.success('Wallet added successfully');
         setAddBankState(false);
         formElement.reset();
       }
@@ -84,7 +85,7 @@ const BankAccounts = () => {
       if (error.response?.data?.errors) {
         setError(error.response.data.errors);
       }
-      alert(error.response?.data?.message || 'An error occurred. Please try again.');
+      toast.error(error?.response?.data?.message || 'Failed to save wallet. Please try again');
     } finally {
       setProcessing(false);
     }

@@ -8,6 +8,7 @@ import InputField from '../../components/common/InputField';
 import SelectField from '../../components/common/SelectField';
 import ToggleSwitch from '../../components/common/ToggleSwitch';
 import SubmitButton from '../../components/common/SubmitButton';
+import { toast } from 'react-toastify';
 
 const Plans = () => {
   const [processing, setProcessing] = useState(false);
@@ -48,6 +49,7 @@ const Plans = () => {
     try {
       const res = await axios.post('api/v1/plans', formData);
       if (res.data.status === 'success') {
+        toast.success('Plan added successfully!');
         setPlans(prev => [res.data.data.plan, ...prev]);
         e.target.reset();
       }
@@ -57,9 +59,10 @@ const Plans = () => {
         setErrors(err.response.data.errors);
         } else {
             setErrors(err);
-            console.error('Unexpected Error:', err);
+            console.log('Unexpected Error:', err);
         }
-        console.error(err);
+        toast.error(err.response?.data?.message || 'Error saving plan');
+        console.log(err);
     } finally {
       setProcessing(false);
     }
@@ -80,6 +83,7 @@ const Plans = () => {
           plan.id === selectedPlan.id ? res.data.data.plan : plan
         ));
         setEditModal(false);
+        toast.success('Plan updated successfully!');
       }
     } catch (err) {
         // Extract errors from the backend response
@@ -87,9 +91,10 @@ const Plans = () => {
             setErrors(err.response.data.errors);
         } else {
             setErrors(err);
-            console.error('Unexpected Error:', err);
+            console.log('Unexpected Error:', err);
         }
-        console.error(err);
+        console.log(err);
+        toast.error(err.response?.data?.message || 'Error updating plan');
     } finally {
       setProcessing(false);
     }
@@ -102,8 +107,10 @@ const Plans = () => {
     try {
       await axios.delete(`api/v1/plans/${plan.id}`);
       setPlans(prev => prev.filter(p => p.id !== plan.id));
+      toast.success('Plan deleted successfully!');
     } catch (err) {
       console.error(err);
+       toast.error(err.response?.data?.message || 'Error deleting plan');
     } finally {
       setDeleting(false);
     }
@@ -288,7 +295,7 @@ const Plans = () => {
       {/* Edit Plan Modal */}
       <Modal show={editModal} maxWidth="sm" onClose={() => setEditModal(false)}>
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4 pb-2 border-b border-gray-200 dark:border-slate-700">
+          <h2 className="text-lg dark:text-slate-300 font-semibold mb-4 pb-2 border-b border-gray-200 dark:border-slate-700">
             Edit Plan
           </h2>
           {selectedPlan && (
@@ -357,7 +364,7 @@ const Plans = () => {
                <label className='block text-sm font-medium text-gray-700 mb-1'>Description</label>
                 <textarea
                   name="description"
-                  className='w-full py-2 px-4 transition-all duration-200 focus:outline-none border border-gray-300 rounded-lg focus:border-primary-light focus:outline-0 focus:ring-0'
+                  className='w-full py-2 px-4 transition-all dark:text-white duration-200 focus:outline-none border border-gray-300 rounded-lg focus:border-primary-light focus:outline-0 focus:ring-0'
                   defaultValue={selectedPlan.description}
                 />
 
@@ -367,7 +374,7 @@ const Plans = () => {
                   checked={returnPrincipal}
                   onChange={() => setReturnPrincipal(!returnPrincipal)}
                 />
-                <label htmlFor="editReturnPrincipal" className="ml-2 text-sm">
+                <label htmlFor="editReturnPrincipal" className="ml-2 text-sm dark:text-slate-300">
                   Return Principal
                 </label>
               </div>
@@ -376,7 +383,7 @@ const Plans = () => {
                 <button
                   type="button"
                   onClick={() => setEditModal(false)}
-                  className="px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                  className="px-4 py-2 dark:text-slate-100 border border-gray-300 dark:border-slate-600 rounded-md text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
                 >
                   Cancel
                 </button>
