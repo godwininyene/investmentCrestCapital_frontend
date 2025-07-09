@@ -9,13 +9,14 @@ import {
   BiTime,
   BiCheckCircle,
   BiXCircle,
-  BiLoaderCircle
+  BiLoaderCircle,
 } from 'react-icons/bi';
 import moment from 'moment';
 import axios from '../../lib/axios';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import SelectField from '../../components/common/SelectField';
 import EmptyState from '../../components/common/EmptyState';
+import { toast } from 'react-toastify';
 
 export default function CopytradeInvestments() {
     const [investments, setInvestments] = useState([]);
@@ -52,6 +53,21 @@ export default function CopytradeInvestments() {
             console.error(error);
         } finally {
             setLoading(prev => ({...prev, investments: false}));
+        }
+    };
+
+    const stopTrade = async (investmentId) => {
+        if (!window.confirm(`Are you sure you want to stop this trade?`)) return;
+        setProcessing(true);
+        try {
+            await axios.patch(`api/v1/copytradeInvestments/${investmentId}/stop`);
+            toast.success('Trade stopped successfully!');
+            await fetchInvestments();
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to stop trade");
+            console.error('Error stopping trade:', error);
+        } finally {
+            setProcessing(false);
         }
     };
 
@@ -304,7 +320,7 @@ export default function CopytradeInvestments() {
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Dates</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                   
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-slate-700">
@@ -351,6 +367,32 @@ export default function CopytradeInvestments() {
                                         </td>
                                         <td className="px-4 py-4 whitespace-nowrap">
                                             {statusBadge(investment.status)}
+                                        </td>
+
+                                        <td className="px-4 py-4 whitespace-nowrap">
+                                            {investment.status === 'active' && (
+                                                <button
+                                                    onClick={() => stopTrade(investment.id)}
+                                                    disabled={processing}
+                                                    className={`inline-flex cursor-pointer items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md ${
+                                                        processing 
+                                                            ? 'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 cursor-not-allowed'
+                                                            : 'bg-red-600 dark:bg-red-700 text-white hover:bg-red-700 dark:hover:bg-red-800'
+                                                    }`}
+                                                >
+                                                    {processing ? (
+                                                        <>
+                                                            <BiLoaderCircle className="animate-spin h-4 w-4 mr-2" />
+                                                            Stopping...
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <BiXCircle className="h-4 w-4 mr-1" />
+                                                            Stop Trade
+                                                        </>
+                                                    )}
+                                                </button>
+                                            )}
                                         </td>
                                        
                                     </tr>

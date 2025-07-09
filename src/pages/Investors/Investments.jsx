@@ -94,7 +94,7 @@ export default function Investments() {
                                 <div>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">Total Profit</p>
                                     <h2 className="text-2xl font-bold text-gray-800 dark:text-white mt-1">
-                                        {loading.stats ? '...' : formatCurrency(stats.profit)}
+                                        {loading.stats ? '...' : formatCurrency(parseFloat(stats.profit))}
                                     </h2>
                                 </div>
                                 <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">

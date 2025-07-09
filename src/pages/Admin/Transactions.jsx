@@ -117,6 +117,7 @@ export default function Transactions() {
   };
 
   const approveTransaction = async (transactionId) => {
+     if (!window.confirm(`Are you sure you want to approve this transaction?`)) return;
     setApproving(true);
     try {
       const res = await axios.patch(`api/v1/transactions/${transactionId}/action/approve`);
@@ -137,6 +138,7 @@ export default function Transactions() {
   };
 
   const declineTransaction = async (transactionId) => {
+    if (!window.confirm(`Are you sure you want to decline this transaction?`)) return;
     setDeclining(true);
     try {
       const res = await axios.patch(`api/v1/transactions/${transactionId}/action/decline`);

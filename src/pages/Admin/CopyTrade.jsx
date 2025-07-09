@@ -6,7 +6,6 @@ import axios from '../../lib/axios';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Modal from '../../components/CustomModal';
 import InputField from '../../components/common/InputField';
-import SelectField from '../../components/common/SelectField';
 import SubmitButton from '../../components/common/SubmitButton';
 import { toast } from 'react-toastify';
 

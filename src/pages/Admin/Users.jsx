@@ -97,7 +97,7 @@ export default function Users() {
     };
 
     const updateAccountStatus = async (status, user) => {
-       
+        if (!window.confirm(`Are you sure you want to ${status} this account?`)) return;
         setSelectedUser(user)
         try {
             setUpdating(true);
@@ -124,7 +124,6 @@ export default function Users() {
             if (res.status === 204) {
                 updateUserInList(user, 'delete');
                 toast.success("User deleted successfully");
-                alert();
                 setUserModal(false);
             }
         } catch (error) {
